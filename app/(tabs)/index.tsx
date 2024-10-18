@@ -1,56 +1,217 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, View, Text, TouchableOpacity, Switch, ScrollView } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Colors } from '@/constants/Colors';
+import { AntDesign, Entypo, EvilIcons, Feather, FontAwesome5, FontAwesome6, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { useState } from 'react';
+import FirstSection from '@/components/miniSections/firstSection';
+import SecondSection from '@/components/miniSections/secondSection';
+import ThirdSection from '@/components/miniSections/ThirdSection';
+import FourthSection from '@/components/miniSections/FourthSection';
 
 export default function HomeScreen() {
+
+  const [changeViewById, setChangeViewById] = useState(1)
+
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.containerImageUser}>
+          <View style={styles.imageUser}>
+          </View>
+          <View>
+            <Text>Hola, David Aragón!</Text>
+            <Text style={styles.greeting}>Buenos días</Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Entypo name="location-pin" size={20} color="black" />
+            <Text style={styles.location}> Bogotá, Cundinamarca</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <Text style={styles.grades}>+29°C |</Text>
+            <Text>
+              <AntDesign name="arrowup" size={17} color="black" />
+              32° - <AntDesign name="arrowdown" size={17} color="black" /> 21°
+            </Text>
+          </View>
+          <Text style={styles.condition}>Mayormente nublado</Text>
+          <View style={styles.border} />
+          <View style={styles.containerOptionsWeather}>
+            <View style={styles.optionWeather}>
+              <Text style={styles.titleOption}>Humedad</Text>
+              <Text style={styles.quantityOption}>75%</Text>
+            </View>
+            <View style={styles.optionWeather}>
+              <Text style={styles.titleOption}>Percepción</Text>
+              <Text style={styles.quantityOption}>5 mm</Text>
+            </View>
+            <View style={styles.optionWeather}>
+              <Text style={styles.titleOption}>Viento</Text>
+              <Text style={styles.quantityOption}>13 km/h</Text>
+            </View>
+            <View style={styles.optionWeather}>
+              <Text style={styles.titleOption}>Presión</Text>
+              <Text style={styles.quantityOption}>1020hPa</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.containerButton}>
+          <TouchableOpacity onPress={() => setChangeViewById(1)} style={[
+            styles.button,
+            changeViewById === 1 ? styles.buttonPressed : null
+          ]}>
+            <MaterialCommunityIcons name="island" size={30} color={changeViewById === 1 ? 'white' : Colors.darkGreen} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setChangeViewById(2)} style={[
+            styles.button,
+            changeViewById === 2 ? styles.buttonPressed : null
+          ]}>
+            <Entypo name="leaf" size={30} color={changeViewById === 2 ? 'white' : Colors.darkGreen} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setChangeViewById(3)} style={[
+            styles.button,
+            changeViewById === 3 ? styles.buttonPressed : null
+          ]}>
+            <FontAwesome5 name="box-open" size={25} color={changeViewById === 3 ? 'white' : Colors.darkGreen} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setChangeViewById(4)} style={[
+            styles.button,
+            changeViewById === 4 ? styles.buttonPressed : null
+          ]}>
+            <MaterialCommunityIcons name="fish" size={34} color={changeViewById === 4 ? 'white' : Colors.darkGreen} />
+          </TouchableOpacity>
+        </View>
+        {
+          changeViewById === 1 && <FirstSection />
+        }
+        {
+          changeViewById === 2 && <SecondSection />
+        }
+        {
+          changeViewById === 3 && <ThirdSection />
+        }
+        {
+          changeViewById === 4 && <FourthSection />
+        }
+
+
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    gap: 25
+  },
+  containerImageUser: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center'
+  },
+  imageUser: {
+    width: 60,
+    height: 60,
+    backgroundColor: Colors.lightGreen,
+    borderRadius: 100
+  },
+  greeting: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.darkGreen
+  },
+  card: {
+    backgroundColor: Colors.lightGreen,
+    borderRadius: 30,
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    gap: 15,
+    borderColor: '#ccc',
+    borderWidth: 1
+  },
+  location: {
+    fontSize: 18,
+    alignItems: 'center',
+    fontWeight: '500'
+  },
+  grades: {
+    fontSize: 24,
+  },
+  condition: {
+    fontSize: 16,
+    color: 'gray'
+  },
+  border: {
+    borderWidth: 0.5,
+    borderColor: '#aaa'
+  },
+  containerOptionsWeather: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+
+  },
+  optionWeather: {
+    alignItems: 'center'
+  },
+  titleOption: {
+    color: 'gray'
+  },
+  quantityOption: {
+    fontWeight: '600',
+    fontSize: 16
+  },
+  containerButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  button: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: Colors.darkGreen,
+    height: 70,
+    width: 70,
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonPressed: {
+    backgroundColor: Colors.darkGreen,
+  },
+  imageTomato: {
+    height: 80,
+    // width: 80,
+    flex: 1,
+    borderRadius: 10,
+    backgroundColor: 'lightblue'
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: '600'
+  },
+  containerIcon: {
+    backgroundColor: 'white',
+    width: 35,
+    borderRadius: 100,
+    height: 35,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  miniCard: {
+    width: '49%',
+    backgroundColor: Colors.lightGreen,
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
